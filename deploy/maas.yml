@@ -3,17 +3,14 @@
   user: vagrant
   sudo: True
   tasks:
-    - name: Install base packages and other usefulness
-      action: apt pkg={{item}} state=installed update_cache=yes
-      with_items:
-        - language-pack-en-base
-        - python-apt
-        - python-pycurl
-        - ubuntu-cloud-keyring
-        - maas
-        - maas-dns
-        - maas-dhcp
-    - name: Add maas superuser
-      command: sudo maas-region-admin createadmin --username=admin --email=admin@example.com --password=pass
-    - name: Add boot images
-      command: maas-import-pxe-files
+     - name: Install base packages and other usefulness
+       action: apt pkg={{item}} state=installed update_cache=yes
+       with_items:
+         - ubuntu-cloud-keyring
+         - maas
+         - maas-dns
+         - maas-dhcp
+     - name: Add maas superuser
+       command: sudo maas-region-admin createadmin --username=admin --email=admin@example.com --password=pass
+     - name: Add boot images
+       command: maas-import-pxe-files

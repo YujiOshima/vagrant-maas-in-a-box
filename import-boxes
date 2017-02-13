@@ -1,4 +1,4 @@
 #!/bin/bash
 
-BOX_PATH="ubuntu/trusty64"
+BOX_PATH="ubuntu/xenial64"
 vagrant box add ${BOX_PATH}

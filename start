@@ -2,7 +2,7 @@
 # start
 # - Starts up maas + nodes
 
-NODES=${MAAS_NUM_NODES:-10}
+NODES=${MAAS_NUM_NODES:-2}
 
 vagrant up maas
 for IMG in `seq 1 ${NODES}`; do
