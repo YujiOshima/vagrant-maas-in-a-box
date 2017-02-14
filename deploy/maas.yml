@@ -3,6 +3,7 @@
   user: vagrant
   sudo: True
   tasks:
+     - apt_repository: repo='ppa:maas/stable'
      - name: Install base packages and other usefulness
        action: apt pkg={{item}} state=installed update_cache=yes
        with_items:
@@ -11,6 +12,10 @@
          - maas-dns
          - maas-dhcp
      - name: Add maas superuser
-       command: sudo maas-region-admin createadmin --username=admin --email=admin@example.com --password=pass
-     - name: Add boot images
-       command: maas-import-pxe-files
+       command: maas-region-admin createadmin --username=admin --email=admin@example.com --password=pass
+     - name: Copy maas setup tool
+       copy: 
+         src: maas-setup.sh
+         dest: /tmp/maas-setup.sh
+     - name: run setup tool
+       command: bash /tmp/maas-setup.sh

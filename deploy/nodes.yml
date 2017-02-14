@@ -12,7 +12,5 @@
         - python-pycurl
         - maas-enlist
         - maas-cli
-    - name: Update system
-      apt: upgrade=dist
     - name: enlist node into maas
       command: maas-enlist --serverurl 192.168.50.100 --interface eth1

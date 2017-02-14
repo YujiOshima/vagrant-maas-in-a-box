@@ -7,7 +7,7 @@
 # Recommended to have at least 6G RAM with roughly 2G free disk space
 
 # MAAS Properties
-MAAS_MEM = '1024'
+MAAS_MEM = '1536'
 
 # Node Properties
 NODE_MEM = '512'
@@ -27,7 +27,7 @@ end
 
 # IP's range at 192.168.50.[101:1xx] - gives you 99 nodes plus 1 maas instance
 # Keep this in mind when configuring your cluster controller's min/max ip ranges
-BOXES = { maas: { ip: "192.168.50.99" } }
+BOXES = {  }
 (1..num_nodes).each do |i|
   if i < 10
     gen_ip = "192.168.50.10#{i}"
@@ -40,9 +40,9 @@ end
 Vagrant.configure("2") do |config|
   # Define our MAAS instance
   config.vm.define "maas", primary: true do |maas|
-    maas.vm.box = "ubuntu/xenial64"
+    maas.vm.box = "ubuntu/trusty64"
     maas.vm.hostname = "maascontroller"
-    maas.vm.network :private_network, ip: '192.168.50.99'
+    maas.vm.network :private_network, ip: '192.168.50.99', virtualbox__intnet: "prov"
     maas.vm.network :forwarded_port, guest: 80, host: 8080
     maas.vm.provider "virtualbox" do |vbox|
       vbox.gui = gui_mode
@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
   # Define our nodes
   BOXES.each do |node_name, node_config|
     config.vm.define(node_name.to_sym) do |vm_conf|
-      vm_conf.vm.box = "ubuntu/xenial64"
+      vm_conf.vm.box = "ubuntu/trust64"
       vm_conf.vm.hostname = "#{node_name}"
       vm_conf.vm.network :private_network, ip: node_config[:ip]
       vm_conf.vm.provider "virtualbox" do |vbox|
